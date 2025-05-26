@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>宿舍管理系统</title>
+<style>
+/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+/* 右侧内容区 */
+.right-content {
+    flex: 1;
+    padding: 40px;
+    background: #f5f5f5;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1_stu.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_stu.html">信息填写</a></div>
+    </div>
+  </div>
+  <div class="nav-item"><a href="3-3_stu.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_stu.html">通知公告</a></div>
+ </div>
+
+<!-- 主体内容 -->
+<div class="right-content">
+  <h2 style="font-size:28px;color:#333;margin-bottom:30px">欢迎使用高校宿舍管理系统</h2>
+  <div style="
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  ">
+    <p style="font-size:16px;color:#666;line-height:1.8">
+      请通过顶部导航菜单选择您要操作的功能：<br><br>
+      ▪ <strong>宿舍管理</strong>：学生信息登记<br>
+      ▪ <strong>维修申请</strong>：在线提交设备维修请求<br>
+      ▪ <strong>通知公告</strong>：查看最新宿舍管理通知
+    </p>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div style="
+  background: #99CCFF;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  margin-top: auto;
+">
+  © 2025 高校宿舍管理系统 版权所有
+</div>
+</body>
+</html>

@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍管理系统-人员管理</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+             body {
+            height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+        }
+        .container {
+            width: 95%;
+            margin: 0 auto;
+        }
+        .toolbar {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px ;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1.html">通知公告</a></div>
+  <div class="nav-item"> 系统管理
+  <div class="dropdown">
+    <div class="dropdown-item"><a href="5-1.html">人员管理</a></div>
+    <div class="dropdown-item"><a href="5-2.html">权限管理</a></div>
+  </div>
+</div>
+</div>
+       <h1>宿舍管理系统 - 人员管理</h1>
+    
+    <div class="toolbar">
+        <select id="roleFilter">
+            <option value="">所有角色</option>
+            <option value="系统管理员">系统管理员</option>
+            <option value="宿舍管理员">宿舍管理员</option>
+            <option value="辅导员">辅导员</option>
+            <option value="学生">学生</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="搜索姓名或账号">
+        <button onclick="filterTable()">查询</button>
+        <button onclick="openAddModal()">添加人员</button>
+        <button onclick="document.getElementById('fileInput').click()">导入Excel</button>
+        <input type="file" id="fileInput" style="display:none" accept=".xlsx,.xls" onchange="importExcel()">
+    </div>
+    
+    <table id="personTable">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>角色</th>
+                <th>账号</th>
+                <th>密码</th>
+                <th>院系</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>系统管理员</td>
+                <td>男</td>
+                <td>系统管理员</td>
+                <td>admin</td>
+                <td>******</td>
+                <td>-</td>
+                <td>
+                    <button onclick="editPerson(this)">编辑</button>
+                    <button disabled>删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>李宿舍</td>
+                <td>女</td>
+                <td>宿舍管理员</td>
+                <td>dorm1</td>
+                <td>******</td>
+                <td>-</td>
+                <td>
+                    <button onclick="editPerson(this)">编辑</button>
+                    <button onclick="deletePerson(this)">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>王辅导员</td>
+                <td>女</td>
+                <td>辅导员</td>
+                <td>fdy1</td>
+                <td>******</td>
+                <td>计算机学院</td>
+                <td>
+                    <button onclick="editPerson(this)">编辑</button>
+                    <button onclick="deletePerson(this)">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 添加/编辑模态框 -->
+<div id="personModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeModal()" style="float:right;cursor:pointer">&times;</span>
+        <h2 id="modalTitle">添加人员</h2>
+        <form onsubmit="savePerson();return false">
+            <div style="margin-bottom:15px">
+                <label>姓名: <input type="text" id="name" required></label>
+            </div>
+            <div style="margin-bottom:15px">
+                <label>性别: 
+                    <select id="gender" required>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </label>
+            </div>
+            <div style="margin-bottom:15px">
+                <label>角色: 
+                    <select id="role" required onchange="toggleDeptField()">
+                        <option value="系统管理员">系统管理员</option>
+                        <option value="宿舍管理员">宿舍管理员</option>
+                        <option value="辅导员">辅导员</option>
+                        <option value="学生">学生</option>
+                    </select>
+                </label>
+            </div>
+            <div style="margin-bottom:15px">
+                <label>账号: <input type="text" id="username" required></label>
+            </div>
+            <div style="margin-bottom:15px">
+                <label>密码: <input type="password" id="password" required></label>
+            </div>
+            <div style="margin-bottom:15px" id="deptDiv">
+                <label>院系: <input type="text" id="department"></label>
+            </div>
+            <button type="submit">保存</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+    let currentEditRow = null;
+    
+    function filterTable() {
+        const role = document.getElementById('roleFilter').value;
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#personTable tbody tr');
+        
+        rows.forEach(row => {
+            const cells = row.cells;
+            const showRole = !role || cells[2].textContent === role;
+            const showSearch = !search || 
+                cells[0].textContent.toLowerCase().includes(search) || 
+                cells[3].textContent.toLowerCase().includes(search);
+            
+            row.style.display = (showRole && showSearch) ? '' : 'none';
+        });
+    }
+    
+    function openAddModal() {
+        document.getElementById('modalTitle').textContent = '添加人员';
+        document.querySelector('#personModal form').reset();
+        currentEditRow = null;
+        document.getElementById('personModal').style.display = 'block';
+    }
+    
+    function editPerson(button) {
+        const row = button.parentNode.parentNode;
+        const cells = row.cells;
+        
+        document.getElementById('modalTitle').textContent = '编辑人员';
+        document.getElementById('name').value = cells[0].textContent;
+        document.getElementById('gender').value = cells[1].textContent;
+        document.getElementById('role').value = cells[2].textContent;
+        document.getElementById('username').value = cells[3].textContent;
+        document.getElementById('password').value = '';
+        document.getElementById('department').value = cells[5].textContent;
+        
+        currentEditRow = row;
+        document.getElementById('personModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+        document.getElementById('personModal').style.display = 'none';
+    }
+    
+    function savePerson() {
+        const name = document.getElementById('name').value;
+        const gender = document.getElementById('gender').value;
+        const role = document.getElementById('role').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const department = document.getElementById('department').value;
+        
+        const newRow = `
+            <td>${name}</td>
+            <td>${gender}</td>
+            <td>${role}</td>
+            <td>${username}</td>
+            <td>******</td>
+            <td>${role === '辅导员' || role === '学生' ? department : '-'}</td>
+            <td>
+                <button onclick="editPerson(this)">编辑</button>
+                <button ${role === '系统管理员' ? 'disabled' : ''} onclick="deletePerson(this)">删除</button>
+            </td>
+        `;
+        
+        if (currentEditRow) {
+            currentEditRow.innerHTML = newRow;
+        } else {
+            const tbody = document.querySelector('#personTable tbody');
+            const newTr = document.createElement('tr');
+            newTr.innerHTML = newRow;
+            tbody.appendChild(newTr);
+        }
+        
+        closeModal();
+    }
+    
+    function deletePerson(button) {
+        if (confirm('确定要删除此人员吗?')) {
+            button.parentNode.parentNode.remove();
+        }
+    }
+    
+    function toggleDeptField() {
+        const role = document.getElementById('role').value;
+        document.getElementById('deptDiv').style.display = 
+            (role === '辅导员' || role === '学生') ? 'block' : 'none';
+    }
+    
+    function importExcel() {
+        const file = document.getElementById('fileInput').files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, {type: 'array'});
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+            
+            const tbody = document.querySelector('#personTable tbody');
+            jsonData.forEach(item => {
+                const newRow = `
+                    <td>${item.姓名 || ''}</td>
+                    <td>${item.性别 || ''}</td>
+                    <td>${item.角色 || ''}</td>
+                    <td>${item.账号 || ''}</td>
+                    <td>******</td>
+                    <td>${(item.角色 === '辅导员' || item.角色 === '学生') ? (item.院系 || '') : '-'}</td>
+                    <td>
+                        <button onclick="editPerson(this)">编辑</button>
+                        <button ${item.角色 === '系统管理员' ? 'disabled' : ''} onclick="deletePerson(this)">删除</button>
+                    </td>
+                `;
+                const tr = document.createElement('tr');
+                tr.innerHTML = newRow;
+                tbody.appendChild(tr);
+            });
+            
+            alert(`成功导入 ${jsonData.length} 条数据`);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    
+    // 初始化显示院系字段
+    toggleDeptField();
+</script>
+</body>
+</html>

@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍管理系统-通知公告</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 8px 15px; background: #99CCFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { opacity: 0.9; }
+        .btn-danger { background: #99CCFF; }
+        .btn-info { background: #99CCFF; }
+        .notice-list { border: 1px solid #ddd; border-radius: 5px; }
+        .notice-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .notice-item:hover { background-color: #f9f9f9; }
+        .notice-item:last-child { border-bottom: none; }
+        .notice-title { font-weight: bold; font-size: 18px; margin-bottom: 5px; }
+        .notice-meta { color: #666; font-size: 14px; margin-bottom: 10px; }
+        .notice-actions { margin-top: 10px; }
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 50%; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 700px; border-radius: 5px; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: black; }
+        textarea { width: 100%; height: 150px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        input[type="text2"] { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .read-status { margin-top: 15px; font-size: 14px; color: #666; }
+        .status-tab { margin-bottom: 15px; display: flex; gap: 10px; }
+        .status-badge { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+        .status-unread { background: #ffeb3b; color: #333; }
+        .status-read { background: #4CAF50; color: white; }
+        .status-details { margin-top: 15px; }
+        .status-details table { width: 100%; border-collapse: collapse; }
+        .status-details th, .status-details td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        .status-details th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1_t.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_t.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2_t.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1_t.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2_t.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3_t.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3_t.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_t.html">通知公告</a></div></div>
+    <div class="container">
+        <div class="header">
+            <h2>宿舍管理系统 - 通知公告</h2>
+            <button id="newNoticeBtn" class="btn">发布新通知</button>
+        </div>
+
+        <div class="status-tab">
+            <button class="btn" onclick="filterNotices('all')">全部通知</button>
+            <button class="btn btn-info" onclick="filterNotices('unread')">未读通知</button>
+            <button class="btn" onclick="filterNotices('read')">已读通知</button>
+        </div>
+
+        <div class="notice-list" id="noticeList">
+            <!-- 通知列表将通过JS动态生成 -->
+        </div>
+    </div>
+
+    <!-- 发布/编辑通知的模态框 -->
+    <div id="noticeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">发布新通知</h3>
+            <input type="text2" id="noticeTitle" placeholder="请输入通知标题">
+            <textarea id="noticeContent" placeholder="请输入通知内容"></textarea>
+            <button id="saveNoticeBtn" class="btn">保存</button>
+            <input type="hidden" id="editNoticeId">
+        </div>
+    </div>
+
+    <!-- 查看通知详情的模态框 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="detailTitle"></h3>
+            <div class="notice-meta" id="detailMeta"></div>
+            <div class="notice-content" id="detailContent" style="margin: 15px 0; line-height: 1.6;"></div>
+            <div class="read-status">
+                阅读状态: <span id="readCount"></span>
+                <button class="btn" style="margin-left: 10px;" onclick="showStatusDetails()">查看详情</button>
+            </div>
+            <div class="notice-actions" id="detailActions"></div>
+        </div>
+    </div>
+
+    <!-- 查看已读/未读详情的模态框 -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>阅读状态详情</h3>
+            <div id="statusDetails" class="status-details">
+                <!-- 状态详情将通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟数据存储
+        let notices = JSON.parse(localStorage.getItem('notices')) || [];
+        let users = ['张三', '李四', '王五', '赵六', '钱七']; // 模拟用户列表
+        let currentUser = '张三'; // 当前登录用户
+
+        // 初始化测试数据
+        if (notices.length === 0) {
+            notices = [
+                {
+                    id: 'notice_1',
+                    title: '关于宿舍卫生检查的通知',
+                    content: '本周五下午3点将进行宿舍卫生检查，请各位同学提前做好宿舍清洁工作。检查内容包括床铺整理、地面清洁、物品摆放等。',
+                    author: '李四',
+                    time: '2025-05-14 10:30',
+                    readBy: ['李四', '王五']
+                },
+                {
+                    id: 'notice_2',
+                    title: '宿舍热水供应时间调整',
+                    content: '从下周一开始，宿舍热水供应时间调整为：早上6:00-8:00，晚上17:00-23:00。请同学们合理安排洗漱时间。',
+                    author: currentUser,
+                    time: '2025-05-15 09:15',
+                    readBy: [currentUser, '钱七']
+                },
+				{
+                    id: 'notice_3',
+                    title: '未读测试',
+                    content: '测试测试。',
+                    author: '李四',
+                    time: '2025-05-14 10:35',
+                    readBy: ['李四', '王五']
+                }
+            ];
+            localStorage.setItem('notices', JSON.stringify(notices));
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNoticeList(notices);
+            
+            // 绑定发布新通知按钮事件
+            document.getElementById('newNoticeBtn').addEventListener('click', function() {
+                document.getElementById('modalTitle').textContent = '发布新通知';
+                document.getElementById('noticeTitle').value = '';
+                document.getElementById('noticeContent').value = '';
+                document.getElementById('editNoticeId').value = '';
+                document.getElementById('noticeModal').style.display = 'block';
+            });
+            
+            // 绑定保存通知按钮事件
+            document.getElementById('saveNoticeBtn').addEventListener('click', saveNotice);
+        });
+
+        // 渲染通知列表
+        function renderNoticeList(noticesToRender) {
+            const noticeList = document.getElementById('noticeList');
+            noticeList.innerHTML = '';
+            
+            if (noticesToRender.length === 0) {
+                noticeList.innerHTML = '<div class="notice-item" style="text-align: center; padding: 30px;">暂无通知</div>';
+                return;
+            }
+            
+            noticesToRender.forEach(notice => {
+                const isAuthor = notice.author === currentUser;
+                const hasRead = notice.readBy.includes(currentUser);
+                
+                const noticeItem = document.createElement('div');
+                noticeItem.className = 'notice-item';
+                noticeItem.onclick = function() { showNoticeDetail(notice.id); };
+                noticeItem.innerHTML = `
+                    <div class="notice-title">
+                        ${notice.title} 
+                        <span class="status-badge ${hasRead ? 'status-read' : 'status-unread'}">
+                            ${hasRead ? '已读' : '未读'}
+                        </span>
+                    </div>
+                    <div class="notice-meta">
+                        发布人: ${notice.author} | 发布时间: ${notice.time}
+                        ${isAuthor ? ' | <span style="color:#4CAF50;">(我的发布)</span>' : ''}
+                    </div>
+                    <div class="read-status">
+                        阅读状态: ${notice.readBy.length}/${users.length} 人已读
+                    </div>
+                `;
+                noticeList.appendChild(noticeItem);
+            });
+        }
+
+        // 显示通知详情
+        function showNoticeDetail(id) {
+            const notice = notices.find(n => n.id === id);
+            if (notice) {
+                const isAuthor = notice.author === currentUser;
+                const hasRead = notice.readBy.includes(currentUser);
+                
+                document.getElementById('detailTitle').textContent = notice.title;
+                document.getElementById('detailMeta').innerHTML = `
+                    发布人: ${notice.author} | 发布时间: ${notice.time}
+                `;
+                document.getElementById('detailContent').textContent = notice.content;
+                document.getElementById('readCount').textContent = `${notice.readBy.length}/${users.length} 人已读`;
+                
+                // 设置操作按钮
+                let actionsHTML = '';
+                if (isAuthor) {
+                    actionsHTML = `
+                        <button class="btn" onclick="editNotice('${notice.id}')">修改</button>
+                        <button class="btn btn-danger" onclick="deleteNotice('${notice.id}')">删除</button>
+                    `;
+                }
+                if (!hasRead && !isAuthor) {
+                    actionsHTML += `<button class="btn" onclick="markAsRead('${notice.id}', true)">标记为已读</button>`;
+                }
+                document.getElementById('detailActions').innerHTML = actionsHTML;
+                
+                // 如果当前用户未读，自动标记为已读
+                if (!hasRead) {
+                    markAsRead(notice.id, false);
+                }
+                
+                document.getElementById('detailModal').style.display = 'block';
+                document.getElementById('detailModal').setAttribute('data-notice-id', notice.id);
+            }
+        }
+
+        // 保存通知
+        function saveNotice() {
+            const title = document.getElementById('noticeTitle').value.trim();
+            const content = document.getElementById('noticeContent').value.trim();
+            const editId = document.getElementById('editNoticeId').value;
+            
+            if (!title || !content) {
+                alert('标题和内容不能为空');
+                return;
+            }
+            
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+            
+            if (editId) {
+                // 编辑现有通知
+                const noticeIndex = notices.findIndex(n => n.id === editId);
+                if (noticeIndex !== -1) {
+                    notices[noticeIndex].title = title;
+                    notices[noticeIndex].content = content;
+                    notices[noticeIndex].time = timeStr;
+                }
+            } else {
+                // 添加新通知
+                const newNotice = {
+                    id: 'notice_' + Date.now(),
+                    title: title,
+                    content: content,
+                    author: currentUser,
+                    time: timeStr,
+                    readBy: [currentUser] // 发布者自动标记为已读
+                };
+                notices.unshift(newNotice);
+            }
+            
+            localStorage.setItem('notices', JSON.stringify(notices));
+            closeModal();
+            renderNoticeList(notices);
+        }
+
+        // 编辑通知
+        function editNotice(id) {
+            const notice = notices.find(n => n.id === id);
+            if (notice) {
+                document.getElementById('modalTitle').textContent = '编辑通知';
+                document.getElementById('noticeTitle').value = notice.title;
+                document.getElementById('noticeContent').value = notice.content;
+                document.getElementById('editNoticeId').value = notice.id;
+                document.getElementById('noticeModal').style.display = 'block';
+                document.getElementById('detailModal').style.display = 'none';
+            }
+        }
+
+        // 删除通知
+        function deleteNotice(id) {
+            if (confirm('确定要删除这条通知吗？')) {
+                notices = notices.filter(n => n.id !== id);
+                localStorage.setItem('notices', JSON.stringify(notices));
+                renderNoticeList(notices);
+                document.getElementById('detailModal').style.display = 'none';
+            }
+        }
+
+        // 标记为已读
+        function markAsRead(id, reloadDetail = true) {
+            const notice = notices.find(n => n.id === id);
+            if (notice && !notice.readBy.includes(currentUser)) {
+                notice.readBy.push(currentUser);
+                localStorage.setItem('notices', JSON.stringify(notices));
+                
+                if (reloadDetail) {
+                    showNoticeDetail(id);
+                } else {
+                    renderNoticeList(notices);
+                }
+            }
+        }
+
+        // 显示阅读状态详情
+        function showStatusDetails() {
+            const noticeId = document.getElementById('detailModal').getAttribute('data-notice-id');
+            const notice = notices.find(n => n.id === noticeId);
+            
+            if (notice) {
+                const statusDetails = document.getElementById('statusDetails');
+                statusDetails.innerHTML = `
+                    <table>
+                        <tr>
+                            <th>状态</th>
+                            <th>姓名</th>
+                        </tr>
+                        ${users.map(user => `
+                            <tr>
+                                <td>${notice.readBy.includes(user) ? '<span class="status-badge status-read">已读</span>' : '<span class="status-badge status-unread">未读</span>'}</td>
+                                <td>${user}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                `;
+                document.getElementById('statusModal').style.display = 'block';
+            }
+        }
+
+        // 过滤通知
+        function filterNotices(type) {
+            if (type === 'all') {
+                renderNoticeList(notices);
+            } else if (type === 'read') {
+                const readNotices = notices.filter(n => n.readBy.includes(currentUser));
+                renderNoticeList(readNotices);
+            } else if (type === 'unread') {
+                const unreadNotices = notices.filter(n => !n.readBy.includes(currentUser));
+                renderNoticeList(unreadNotices);
+            }
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('noticeModal').style.display = 'none';
+            document.getElementById('detailModal').style.display = 'none';
+            document.getElementById('statusModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

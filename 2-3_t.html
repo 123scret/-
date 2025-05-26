@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍卫生评选系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+        body {
+            font-family: 'Microsoft YaHei';
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px ;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #99CCFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .gold { background-color: #FFD700; }
+        .silver { background-color: #C0C0C0; }
+        .bronze { background-color: #CD7F32; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+        input[type="number"], input[type="text2"] {
+            padding: 8px;
+            width: 100px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #99CCFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #99CCFF;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            color: black;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #99CCFF;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin: 0; font-size: 24px; color: white; text-align: left;"><a href="1_t.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_t.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2_t.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1_t.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2_t.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3_t.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3_t.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_t.html">通知公告</a></div></div>
+    <div class="container">
+        <h1>宿舍管理系统-卫生评选</h1>
+        
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'importTab')">Excel导入</button>
+            <button class="tablinks" onclick="openTab(event, 'manualTab')">手动录入</button>
+            <button class="tablinks" onclick="openTab(event, 'awardTab')">奖项设置</button>
+        </div>
+
+        <!-- Excel导入标签页 -->
+        <div id="importTab" class="tabcontent" style="display: block;">
+            <h2>Excel数据导入</h2>
+            <div class="form-group">
+                <input type="file" id="excelFile" accept=".xlsx,.xls"/>
+                <button onclick="importExcel()">导入数据</button>
+                <button onclick="initExampleData()">加载示例数据</button>
+            </div>
+            <p>说明：Excel文件需包含"宿舍号"和"得分"两列数据</p>
+        </div>
+
+        <!-- 手动录入标签页 -->
+        <div id="manualTab" class="tabcontent">
+            <h2>手动录入数据</h2>
+            <div class="form-group">
+                <label>宿舍号:</label>
+                <input type="text2" id="dormNum" placeholder="如: A101">
+                <label>得分:</label>
+                <input type="number" id="dormScore" min="0" max="100" placeholder="0-100">
+                <button onclick="addManualData()">添加记录</button>
+            </div>
+        </div>
+
+        <!-- 奖项设置标签页 -->
+        <div id="awardTab" class="tabcontent">
+            <h2>奖项设置</h2>
+            <div class="form-group">
+                <label>一等奖:</label>
+                <input type="number" id="gold" min="0" value="3">
+                <label>二等奖:</label>
+                <input type="number" id="silver" min="0" value="5">
+                <label>三等奖:</label>
+                <input type="number" id="bronze" min="0" value="7">
+                <button onclick="calculateAwards()">开始评选</button>
+            </div>
+        </div>
+
+        <!-- 数据显示区域 -->
+        <div>
+            <h2>宿舍卫生评分表</h2>
+            <table id="scoreTable">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>宿舍号</th>
+                        <th>得分</th>
+                        <th>等级</th>
+                        <th>奖项</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let dormData = [];
+        
+        // 示例数据
+        const exampleData = [
+            {dorm: "A101", score: 95}, {dorm: "A102", score: 88}, {dorm: "A103", score: 92},
+            {dorm: "A201", score: 85}, {dorm: "A202", score: 90}, {dorm: "A203", score: 87},
+            {dorm: "A301", score: 93}, {dorm: "A302", score: 89}, {dorm: "A303", score: 91},
+            {dorm: "A401", score: 86}, {dorm: "A402", score: 94}, {dorm: "A403", score: 84},
+            {dorm: "A501", score: 82}, {dorm: "A502", score: 83}, {dorm: "A503", score: 80}
+        ];
+        
+        // 初始化示例数据
+        function initExampleData() {
+            dormData = [...exampleData];
+            updateTable();
+            alert("已加载15条示例数据");
+        }
+        
+        // 导入Excel
+        function importExcel() {
+            const file = document.getElementById('excelFile').files[0];
+            if (!file) {
+                alert("请选择Excel文件");
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    dormData = jsonData.map(item => ({
+                        dorm: item['宿舍号'].toString(),
+                        score: Number(item['得分']),
+                        level: getScoreLevel(Number(item['得分']))
+                    }));
+                    
+                    updateTable();
+                    alert(`成功导入${dormData.length}条数据`);
+                } catch (error) {
+                    alert("导入失败，请检查Excel格式");
+                    console.error(error);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        
+        // 手动添加数据
+        function addManualData() {
+            const dormNum = document.getElementById('dormNum').value;
+            const dormScore = document.getElementById('dormScore').value;
+            
+            if (!dormNum || !dormScore) {
+                alert("请输入宿舍号和得分");
+                return;
+            }
+            
+            dormData.push({
+                dorm: dormNum,
+                score: Number(dormScore),
+                level: getScoreLevel(Number(dormScore))
+            });
+            
+            document.getElementById('dormNum').value = '';
+            document.getElementById('dormScore').value = '';
+            
+            updateTable();
+            alert("已添加记录");
+        }
+        
+        // 计算分数等级
+        function getScoreLevel(score) {
+            if (score >= 90) return "优秀";
+            else if (score >= 80) return "良好";
+            else if (score >= 60) return "合格";
+            else return "不合格";
+        }
+        
+        // 更新表格
+        function updateTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            // 按得分降序排序
+            dormData.sort((a, b) => b.score - a.score);
+            
+            dormData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                // 设置奖项颜色
+                if (item.award === '一等奖') row.classList.add('gold');
+                else if (item.award === '二等奖') row.classList.add('silver');
+                else if (item.award === '三等奖') row.classList.add('bronze');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${item.dorm}</td>
+                    <td>${item.score}</td>
+                    <td>${item.level || getScoreLevel(item.score)}</td>
+                    <td>${item.award || ''}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // 计算奖项
+        function calculateAwards() {
+            const goldCount = parseInt(document.getElementById('gold').value);
+            const silverCount = parseInt(document.getElementById('silver').value);
+            const bronzeCount = parseInt(document.getElementById('bronze').value);
+            
+            // 清除旧奖项
+            dormData.forEach(item => delete item.award);
+            
+            // 重新排序
+            dormData.sort((a, b) => b.score - a.score);
+            
+            // 设置新奖项
+            for (let i = 0; i < dormData.length; i++) {
+                if (i < goldCount) dormData[i].award = '一等奖';
+                else if (i < goldCount + silverCount) dormData[i].award = '二等奖';
+                else if (i < goldCount + silverCount + bronzeCount) dormData[i].award = '三等奖';
+            }
+            
+            updateTable();
+            alert("奖项评选完成");
+        }
+        
+        // 切换标签页
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        
+        // 页面加载时初始化
+        window.onload = function() {
+            initExampleData();
+        };
+    </script>
+</body>
+</html>

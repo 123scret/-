@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍管理系统-权限管理</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+     body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #3a7bd5; text-align: center; margin-bottom: 20px; }
+        .role-selector { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 15px; }
+        .role-btn { padding: 10px 20px; margin-right: 10px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        .role-btn.active { background: #2ecc71; }
+        .role-panel { display: none; }
+        .role-panel.active { display: block; }
+        .permission-group { margin-bottom: 15px; padding: 15px; border: 1px solid #eee; border-radius: 5px; }
+        .group-title { font-weight: bold; margin-bottom: 10px; color: #2c3e50; }
+        .permission-item { margin-left: 20px; margin-bottom: 8px; }
+        .btn-save { padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 3px; cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin: 0; font-size: 24px; color: white; text-align: left;"><a href="1_t.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_t.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2_t.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1_t.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2_t.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3_t.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3_t.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_t.html">通知公告</a></div>
+
+    <div class="container">
+        <h1>宿舍管理系统 - 权限管理</h1>
+        
+        <div class="role-selector">
+            <button class="role-btn active" onclick="showRole('admin')">系统管理员</button>
+            <button class="role-btn" onclick="showRole('counselor')">辅导员</button>
+            <button class="role-btn" onclick="showRole('dormAdmin')">宿舍管理员</button>
+            <button class="role-btn" onclick="showRole('student')">学生</button>
+        </div>
+
+        <div id="adminPanel" class="role-panel active">
+            <h2>系统管理员权限设置</h2>
+            <div class="permission-group">
+                <div class="group-title">宿舍管理</div>
+                <div class="permission-item"><input type="checkbox" id="admin-dorm-info" checked> <label for="admin-dorm-info">信息填写</label></div>
+                <div class="permission-item"><input type="checkbox" id="admin-dorm-manage" checked> <label for="admin-dorm-manage">住宿管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">宿舍事务</div>
+                <div class="permission-item"><input type="checkbox" id="admin-attendance" checked> <label for="admin-attendance">考勤记录</label></div>
+                <div class="permission-item"><input type="checkbox" id="admin-dorm-assign" checked> <label for="admin-dorm-assign">宿舍分配</label></div>
+                <div class="permission-item"><input type="checkbox" id="admin-hygiene" checked> <label for="admin-hygiene">卫生评选</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">维修申请</div>
+                <div class="permission-item"><input type="checkbox" id="admin-repair" checked> <label for="admin-repair">维修申请管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">通知公告</div>
+                <div class="permission-item"><input type="checkbox" id="admin-notice" checked> <label for="admin-notice">通知公告管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">系统管理</div>
+                <div class="permission-item"><input type="checkbox" id="admin-user-manage" checked> <label for="admin-user-manage">人员管理</label></div>
+                <div class="permission-item"><input type="checkbox" id="admin-permission-manage" checked> <label for="admin-permission-manage">权限管理</label></div>
+            </div>
+        </div>
+
+        <div id="counselorPanel" class="role-panel">
+            <h2>辅导员权限设置</h2>
+            <div class="permission-group">
+                <div class="group-title">宿舍管理</div>
+                <div class="permission-item"><input type="checkbox" id="counselor-dorm-info" checked> <label for="counselor-dorm-info">信息填写</label></div>
+                <div class="permission-item"><input type="checkbox" id="counselor-dorm-manage" checked> <label for="counselor-dorm-manage">住宿管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">宿舍事务</div>
+                <div class="permission-item"><input type="checkbox" id="counselor-attendance" checked> <label for="counselor-attendance">考勤记录</label></div>
+                <div class="permission-item"><input type="checkbox" id="counselor-dorm-assign" checked> <label for="counselor-dorm-assign">宿舍分配</label></div>
+                <div class="permission-item"><input type="checkbox" id="counselor-hygiene" checked> <label for="counselor-hygiene">卫生评选</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">维修申请</div>
+                <div class="permission-item"><input type="checkbox" id="counselor-repair" checked> <label for="counselor-repair">维修申请管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">通知公告</div>
+                <div class="permission-item"><input type="checkbox" id="counselor-notice" checked> <label for="counselor-notice">通知公告管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">系统管理</div>
+                <div class="permission-item"><input type="checkbox" id="counselor-user-manage"> <label for="counselor-user-manage">人员管理</label></div>
+                <div class="permission-item"><input type="checkbox" id="counselor-permission-manage"> <label for="counselor-permission-manage">权限管理</label></div>
+            </div>
+        </div>
+
+        <div id="dormAdminPanel" class="role-panel">
+            <h2>宿舍管理员权限设置</h2>
+            <div class="permission-group">
+                <div class="group-title">宿舍管理</div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-dorm-info" checked> <label for="dormAdmin-dorm-info">信息填写</label></div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-dorm-manage" checked> <label for="dormAdmin-dorm-manage">住宿管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">宿舍事务</div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-attendance" checked> <label for="dormAdmin-attendance">考勤记录</label></div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-dorm-assign" checked> <label for="dormAdmin-dorm-assign">宿舍分配</label></div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-hygiene" checked> <label for="dormAdmin-hygiene">卫生评选</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">维修申请</div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-repair" checked> <label for="dormAdmin-repair">维修申请管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">通知公告</div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-notice" checked> <label for="dormAdmin-notice">通知公告管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">系统管理</div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-user-manage"> <label for="dormAdmin-user-manage">人员管理</label></div>
+                <div class="permission-item"><input type="checkbox" id="dormAdmin-permission-manage"> <label for="dormAdmin-permission-manage">权限管理</label></div>
+            </div>
+        </div>
+
+        <div id="studentPanel" class="role-panel">
+            <h2>学生权限设置</h2>
+            <div class="permission-group">
+                <div class="group-title">宿舍管理</div>
+                <div class="permission-item"><input type="checkbox" id="student-dorm-info" checked> <label for="student-dorm-info">信息填写</label></div>
+                <div class="permission-item"><input type="checkbox" id="student-dorm-manage"> <label for="student-dorm-manage">住宿管理</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">宿舍事务</div>
+                <div class="permission-item"><input type="checkbox" id="student-attendance"> <label for="student-attendance">考勤记录</label></div>
+                <div class="permission-item"><input type="checkbox" id="student-dorm-assign"> <label for="student-dorm-assign">宿舍分配</label></div>
+                <div class="permission-item"><input type="checkbox" id="student-hygiene"> <label for="student-hygiene">卫生评选</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">维修申请</div>
+                <div class="permission-item"><input type="checkbox" id="student-repair" checked> <label for="student-repair">维修申请</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">通知公告</div>
+                <div class="permission-item"><input type="checkbox" id="student-notice" checked> <label for="student-notice">查看通知公告</label></div>
+            </div>
+            <div class="permission-group">
+                <div class="group-title">系统管理</div>
+                <div class="permission-item"><input type="checkbox" id="student-user-manage"> <label for="student-user-manage">人员管理</label></div>
+                <div class="permission-item"><input type="checkbox" id="student-permission-manage"> <label for="student-permission-manage">权限管理</label></div>
+            </div>
+        </div>
+
+        <button class="btn-save" onclick="savePermissions()">保存权限设置</button>
+    </div>
+
+    <script>
+        function showRole(role) {
+            // 更新按钮状态
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // 更新面板显示
+            document.querySelectorAll('.role-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(role + 'Panel').classList.add('active');
+        }
+
+        function savePermissions() {
+            alert('权限设置已保存！');
+            // 这里可以添加实际保存逻辑，如AJAX请求到服务器
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>宿舍考勤管理系统</title>
+<style>
+/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+/* 右侧内容区 */
+.right-content {
+    flex: 1;
+    padding: 40px;
+    background: #f5f5f5;
+}
+/* 表格样式 */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.attendance-table th {
+    background: #99CCFF;
+    color: white;
+    padding: 12px;
+}
+.attendance-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* 表单样式 */
+.input-form {
+    background: #f5f5f5;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+.status-select {
+    padding: 8px;
+    margin: 0 10px;
+}
+</style>
+</head>
+
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1.html">通知公告</a></div>
+  <div class="nav-item"> 系统管理
+  <div class="dropdown">
+    <div class="dropdown-item"><a href="5-1.html">人员管理</a></div>
+    <div class="dropdown-item"><a href="5-2.html">权限管理</a></div>
+  </div>
+</div>
+</div>
+
+<h2>宿舍管理系统-考勤记录</h2>
+
+<!-- 考勤录入表单 -->
+<div class="input-form">
+    <input type="date" id="recordDate" required>
+    <input type="text" id="studentName" placeholder="学生姓名" required>
+    <input type="text" id="dormInfo" placeholder="宿舍号" required>
+    <select id="attendanceStatus" class="status-select">
+        <option value="请假">请假</option>
+        <option value="缺勤">缺勤</option>
+    </select>
+    <button onclick="addRecord()">添加记录</button>
+</div>
+
+<!-- 考勤记录表格 -->
+<table class="attendance-table">
+    <thead>
+        <tr>
+            <th>日期</th>
+            <th>姓名</th>
+            <th>宿舍号</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody id="recordsBody"></tbody>
+</table>
+
+<script>
+// 初始化数据（含示例）
+let attendanceData = localStorage.getItem('attendanceData') 
+                   ? JSON.parse(localStorage.getItem('attendanceData'))
+                   : [
+                       {
+                           date: "2025-03-01",
+                           name: "张三",
+                           dorm: "A-301",
+                           status: "请假"
+                       },
+                       {
+                           date: "2025-03-02",
+                           name: "李四",
+                           dorm: "B-205",
+                           status: "缺勤"
+                       }
+                   ];
+
+// 表格渲染
+function renderTable() {
+    const tbody = document.getElementById('recordsBody');
+    tbody.innerHTML = attendanceData.map((record, index) => `
+        <tr>
+            <td>${record.date}</td>
+            <td>${record.name}</td>
+            <td>${record.dorm}</td>
+            <td>${record.status}</td>
+            <td>
+                <button onclick="deleteRecord(${index})">删除</button>
+            </td>
+        </tr>
+    `).join('');
+    
+    localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
+}
+
+// 添加记录
+function addRecord() {
+    const newRecord = {
+        date: document.getElementById('recordDate').value,
+        name: document.getElementById('studentName').value,
+        dorm: document.getElementById('dormInfo').value,
+        status: document.getElementById('attendanceStatus').value
+    };
+
+    attendanceData.push(newRecord);
+    renderTable();
+    
+    // 清空表单
+    document.getElementById('recordDate').value = '';
+    document.getElementById('studentName').value = '';
+    document.getElementById('dormInfo').value = '';
+}
+
+// 删除记录
+function deleteRecord(index) {
+    if(confirm("确认删除此记录？")) {
+        attendanceData.splice(index, 1);
+        renderTable();
+    }
+}
+
+// 初始化运行
+renderTable();
+</script>
+</body>
+</html>

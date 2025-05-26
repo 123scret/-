@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>宿舍管理系统</title>
+<style>
+/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+/* 基础样式 */ 
+        body { height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px; } 
+        table { border-collapse: collapse; width: 100%; } 
+        th, td { border: 1px; padding: 12px; text-align: left; } 
+        th { background-color: #99CCFF; color: white; } 
+        button { padding: 6px 12px; margin: 2px; cursor: pointer; } 
+        
+        /* 弹窗样式 */ 
+        .modal { 
+            display:none; 
+            Z-Index: 999; 
+            position: fixed; 
+            top:50%; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+        } 
+        .modal-content { 
+            background: white; 
+            width: 400px; 
+            padding: 20px; 
+            margin: 50px auto; 
+            border-radius: 5px; 
+        } 
+</style>
+</head>
+
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1_t.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_t.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2_t.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1_t.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2_t.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3_t.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3_t.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_t.html">通知公告</a></div></div>
+ <!-- 主界面 --> 
+    <h2>宿舍管理系统-住宿管理</h2> 
+    <button onclick="showDormModal()">新建宿舍</button> 
+    <table width="100%" id="dormTable"> 
+        <thead> 
+            <tr> 
+                <th>楼栋</th> 
+                <th>楼层</th> 
+                <th>房号</th> 
+                <th>类型</th> 
+                <th>入住人数</th> 
+                <th>操作</th> 
+            </tr> 
+        </thead> 
+        <tbody id="tableBody"></tbody> 
+    </table> 
+    
+    <!-- 新建宿舍弹窗 --> 
+    <div id="dormModal" class="modal"> 
+        <div class="modal-content"> 
+            <h3>新建宿舍</h3> 
+            <form> 
+                <p>楼栋号：<input type="text" id="newBuilding" required></p> 
+                <p>楼层：<input type="number" id="newFloor" required></p> 
+                <p>房号：<input type="text" id="newRoom" required></p> 
+                <p>类型： 
+                    <select id="newType"> 
+                        <option value="4">四人间</option> 
+                        <option value="6">六人间</option> 
+                    </select> 
+                </p> 
+                <button type="button" onclick="saveDorm()">保存</button> 
+                <button type="button" onclick="closeModal('dormModal')">取消</button> 
+            </form> 
+        </div> 
+    </div> 
+    
+    <!-- 详情弹窗 --> 
+    <div id="detailModal" class="modal"> 
+        <div class="modal-content"> 
+            <h3>宿舍详情</h3> 
+            <div id="detailContent"></div> 
+            <button onclick="showAddStudentModal()">新增室友</button> 
+            <button onclick="closeModal('detailModal')">关闭</button> 
+        </div> 
+    </div> 
+    
+    <!-- 新增室友弹窗 --> 
+    <div id="studentModal" class="modal"> 
+        <div class="modal-content"> 
+            <h3>添加/编辑室友</h3> 
+            <form> 
+                <p>姓名：<input type="text" id="stuName" required></p> 
+                <p>床号：<input type="number" id="stuBed" min="1" required></p> 
+                <p>
+                    <label><input type="checkbox" id="changeDormCheckbox"> 更换寝室</label>
+                </p>
+                <p id="moveDormField">
+                    更换到：<select id="moveDorm" disabled></select>
+                </p> 
+                <button type="button" onclick="saveStudent()">保存</button> 
+                <button type="button" onclick="closeModal('studentModal')">取消</button> 
+            </form> 
+        </div> 
+    </div> 
+    
+    <script> 
+        // 初始示例数据 
+        let dormData = [ 
+            { 
+                id: 1, 
+                building: "A栋", 
+                floor: 3, 
+                room: "301", 
+                type: 4, 
+                students: [ 
+                    { name: "张三", bed: 1 }, 
+                    { name: "李四", bed: 2 } 
+                ] 
+            }, 
+            { 
+                id: 2, 
+                building: "B栋", 
+                floor: 2, 
+                room: "205", 
+                type: 6, 
+                students: [ 
+                    { name: "王五", bed: 3 }, 
+                    { name: "赵六", bed: 4 } 
+                ] 
+            } 
+        ]; 
+        
+        let currentDormId = null; 
+        
+        // 渲染主表格 
+        function renderTable() { 
+            let tbody = document.getElementById('tableBody'); 
+            tbody.innerHTML = dormData.map(dorm => ` 
+                <tr> 
+                    <td>${dorm.building}</td> 
+                    <td>${dorm.floor}</td> 
+                    <td>${dorm.room}</td> 
+                    <td>${dorm.type}人间</td> 
+                    <td>${dorm.students.length}/${dorm.type}</td> 
+                    <td> 
+                        <button onclick="showDetail(${dorm.id})">详情</button> 
+                        <button onclick="deleteDorm(${dorm.id})">删除</button> 
+                    </td> 
+                </tr> 
+            `).join(''); 
+        } 
+        
+        // 显示宿舍弹窗 
+        function showDormModal() { 
+            document.getElementById('dormModal').style.display = 'block'; 
+        } 
+        
+        // 保存新宿舍 
+        function saveDorm() { 
+            const newDorm = { 
+                id: Date.now(), 
+                building: document.getElementById('newBuilding').value, 
+                floor: parseInt(document.getElementById('newFloor').value), 
+                room: document.getElementById('newRoom').value, 
+                type: parseInt(document.getElementById('newType').value), 
+                students: [] 
+            }; 
+            dormData.push(newDorm); 
+            closeModal('dormModal'); 
+            renderTable(); 
+        } 
+        
+        // 显示详情弹窗 
+        function showDetail(dormId) { 
+            currentDormId = dormId; 
+            const dorm = dormData.find(d => d.id === dormId); 
+            let html = `<p>${dorm.building} ${dorm.floor}层 ${dorm.room}</p>`; 
+            
+            html += '<table><tr><th>姓名</th><th>床号</th><th>操作</th></tr>'; 
+            dorm.students.forEach((student, index) => { 
+                html += ` 
+                    <tr> 
+                        <td>${student.name}</td> 
+                        <td>${student.bed}</td> 
+                        <td> 
+                            <button onclick="editStudent(${index})">编辑</button> 
+                            <button onclick="deleteStudent(${index})">删除</button> 
+                        </td> 
+                    </tr>`; 
+            }); 
+            html += '</table>'; 
+            
+            document.getElementById('detailContent').innerHTML = html; 
+            document.getElementById('detailModal').style.display = 'block'; 
+        } 
+        
+        // 显示新增室友弹窗 
+        function showAddStudentModal() { 
+            // 默认当前寝室
+            document.getElementById('stuName').value = '';
+            document.getElementById('stuBed').value = '';
+            document.getElementById('changeDormCheckbox').checked = false;
+            document.getElementById('moveDorm').disabled = true;
+            
+            document.getElementById('studentModal').style.display = 'block'; 
+        } 
+        
+        // 保存室友信息 
+        function saveStudent() { 
+            const dorm = dormData.find(d => d.id === currentDormId); 
+            const newStudent = { 
+                name: document.getElementById('stuName').value, 
+                bed: parseInt(document.getElementById('stuBed').value) 
+            }; 
+            
+            // 检查是否更换寝室
+            const changeDorm = document.getElementById('changeDormCheckbox').checked;
+            if (changeDorm) {
+                const moveTo = document.getElementById('moveDorm').value;
+                if (moveTo) {
+                    const targetDorm = dormData.find(d => d.id == moveTo);
+                    targetDorm.students.push(newStudent);
+                    dorm.students = dorm.students.filter(s => s.name !== newStudent.name);
+                }
+            } else {
+                dorm.students.push(newStudent);
+            }
+            
+            closeModal('studentModal'); 
+            showDetail(currentDormId); // 刷新详情 
+        } 
+        
+      /*  // 编辑室友信息
+        function editStudent(index) {
+            const dorm = dormData.find(d => d.id === currentDormId);
+            const student = dorm.students[index];
+            
+            document.getElementById('stuName').value = student.name;
+            document.getElementById('stuBed').value = student.bed;
+            document.getElementById('changeDormCheckbox').checked = false;
+            document.getElementById('moveDorm').disabled = true;
+            document.getElementById('moveDorm').value = '';
+            
+            document.getElementById('studentModal').style.display = 'block';
+        }*/
+        
+        // 删除宿舍 
+        function deleteDorm(dormId) { 
+            dormData = dormData.filter(d => d.id !== dormId); 
+            renderTable(); 
+        } 
+        
+        // 删除室友
+        function deleteStudent(index) {
+            const dorm = dormData.find(d => d.id === currentDormId);
+            dorm.students.splice(index, 1);
+            renderTable();
+            closeModal('detailModal');
+        }
+        
+        // 关闭弹窗 
+        function closeModal(modalId) { 
+            document.getElementById(modalId).style.display = 'none'; 
+        } 
+        
+        // 初始化 
+        renderTable(); 
+        
+        // 初始化新增室友弹窗的寝室选择器
+        document.getElementById('changeDormCheckbox').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('moveDorm').disabled = false;
+                let select = document.getElementById('moveDorm');
+                select.innerHTML = dormData
+                    .filter(d => d.id !== currentDormId)
+                    .map(d => `<option value="${d.id}">${d.building} ${d.room}</option>`);
+            } else {
+                document.getElementById('moveDorm').disabled = true;
+                document.getElementById('moveDorm').value = '';
+            }
+        });
+    </script>
+</body>
+</html>

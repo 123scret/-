@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宿舍分配系统</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px ;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #99CCFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #99CCFF;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 6px;
+            width: 200px;
+        }
+        .preview {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2.html">住宿管理写</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1.html">通知公告</a></div>
+  <div class="nav-item"> 系统管理
+  <div class="dropdown">
+    <div class="dropdown-item"><a href="5-1.html">人员管理</a></div>
+    <div class="dropdown-item"><a href="5-2.html">权限管理</a></div>
+  </div>
+</div>
+</div>
+    <h1>宿舍管理系统-宿舍分配</h1>
+    
+    <!-- 数据导入区 -->
+    <div class="section">
+        <h2>学生数据导入</h2>
+        <input type="file" id="excelFile" accept=".xlsx,.xls">
+        <button onclick="importExcel()">导入学生数据</button>
+        <div id="studentPreview" class="preview"></div>
+    </div>
+
+    <!-- 手动添加学生数据区 -->
+    <div class="section">
+        <h2>手动添加学生数据</h2>
+        <form id="studentForm">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" required><br><br>
+            <label for="studentID">学号:</label>
+            <input type="number" id="studentID" required><br><br>
+            <label for="college">院系:</label>
+            <input type="text" id="college" required><br><br>
+            <label for="major">专业:</label>
+            <input type="text" id="major" required><br><br>
+            <button type="submit">添加学生</button>
+        </form>
+        <div id="manualStudentPreview" class="preview"></div>
+    </div>
+
+    <!-- 分配条件设置 -->
+    <div class="section">
+        <h2>分配策略设置</h2>
+        <label><input type="checkbox" id="sortByID"> 按学号顺序</label><br>
+        <label><input type="checkbox" id="sameCollege"> 同院系</label><br>
+        <label><input type="checkbox" id="sameMajor"> 同专业</label><br>
+        <label><input type="checkbox" id="fillOtherCollege"> 跨院系补位</label><br>
+        <label><input type="checkbox" id="fillOtherMajor"> 跨专业补位</label><br>
+        <button onclick="startAllocation()">开始分配</button>
+    </div>
+
+    <!-- 宿舍展示区 -->
+    <div class="section">
+        <h2>宿舍分配结果</h2>
+        <table id="dormTable">
+            <thead>
+                <tr>
+                    <th>房间号</th>
+                    <th>已住/床位</th>
+                    <th>学生列表</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // 初始化宿舍数据
+        const dorms = [
+            { room: "101", capacity: 4, students: [] },
+            { room: "102", capacity: 4, students: [] },
+            { room: "103", capacity: 4, students: [] },
+            { room: "104", capacity: 4, students: [] },
+            { room: "105", capacity: 4, students: [] }
+        ];
+
+        // 学生数据数组
+        let students = [];
+
+        // 导入Excel文件
+        function importExcel() {
+            const fileInput = document.getElementById('excelFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert("请先选择文件");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                
+                students = jsonData.map(item => ({
+                    姓名: item.姓名 || item.name,
+                    学号: item.学号 || item.id,
+                    院系: item.院系 || item.college,
+                    专业: item.专业 || item.major
+                }));
+
+                document.getElementById('studentPreview').innerHTML = `
+                    已导入 ${students.length} 名学生数据<br>
+                    <pre>${JSON.stringify(students.slice(0, 5), null, 2)}${students.length > 5 ? '\n...' : ''}</pre>
+                `;
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // 手动添加学生数据
+        document.getElementById('studentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const studentID = document.getElementById('studentID').value;
+            const college = document.getElementById('college').value;
+            const major = document.getElementById('major').value;
+
+            const newStudent = {
+                姓名: name,
+                学号: studentID,
+                院系: college,
+                专业: major
+            };
+
+            students.push(newStudent);
+            document.getElementById('studentForm').reset();
+
+            document.getElementById('manualStudentPreview').innerHTML = `
+                已添加学生：<br>
+                <pre>${JSON.stringify(newStudent, null, 2)}</pre>
+                <br>当前学生总数：${students.length}
+            `;
+        });
+
+        // 智能分配算法
+        function startAllocation() {
+            // 重置宿舍状态
+            dorms.forEach(d => d.students = []);
+
+            // 排序策略
+            let sortedStudents = [...students];
+            if (document.getElementById('sortByID').checked) {
+                sortedStudents.sort((a, b) => a.学号 - b.学号);
+            }
+            if (document.getElementById('sameCollege').checked) {
+                sortedStudents.sort((a, b) => a.院系.localeCompare(b.院系));
+            }
+            if (document.getElementById('sameMajor').checked) {
+                sortedStudents.sort((a, b) => a.专业.localeCompare(b.专业));
+            }
+
+            // 分配逻辑
+            let currentDormIndex = 0;
+            let currentCollege = sortedStudents[0]?.院系;
+            let currentMajor = sortedStudents[0]?.专业;
+
+            sortedStudents.forEach(student => {
+                // 寻找可用的宿舍
+                while (currentDormIndex < dorms.length && 
+                       dorms[currentDormIndex].students.length >= dorms[currentDormIndex].capacity) {
+                    currentDormIndex++;
+                }
+
+                // 跨院系补位逻辑
+                if (document.getElementById('fillOtherCollege').checked && 
+                    currentCollege !== student.院系 && 
+                    currentDormIndex < dorms.length) {
+                    dorms[currentDormIndex].students.push(student);
+                } 
+                // 跨专业补位逻辑
+                else if (document.getElementById('fillOtherMajor').checked && 
+                         currentMajor !== student.专业 && 
+                         currentDormIndex < dorms.length) {
+                    dorms[currentDormIndex].students.push(student);
+                } 
+                // 正常分配
+                else {
+                    if (currentDormIndex < dorms.length) {
+                        dorms[currentDormIndex].students.push(student);
+                        currentCollege = student.院系;
+                        currentMajor = student.专业;
+                    }
+                }
+            });
+
+            renderDorms();
+        }
+
+        // 渲染宿舍表格
+        function renderDorms() {
+            const tbody = document.querySelector('#dormTable tbody');
+            tbody.innerHTML = dorms.map(dorm => `
+                <tr>
+                    <td>${dorm.room}</td>
+                    <td>${dorm.students.length}/${dorm.capacity}</td>
+                    <td>${dorm.students.map(s => `${s.姓名}(${s.学号})`).join(', ')}</td>
+                </tr>
+            `).join('');
+        }
+
+        // 初始化渲染空宿舍
+        renderDorms();
+    </script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍管理系统-人员管理</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
+        .btn { padding: 8px 15px; background: #99CCFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { opacity: 0.9; }
+        .btn-info { background: #99CCFF; }
+        .btn-warning { background: #99CCFF; }
+        .search-area { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text2"], select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px ; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        tr:hover { background-color: #f5f5f5; }
+        .action-btns { display: flex; gap: 5px; }
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top:50%; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 5px; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: black; }
+        .error { color: red; font-size: 14px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1_t.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3_t.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2_t.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1_t.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2_t.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3_t.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3_t.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1_t.html">通知公告</a></div></div>
+
+    <div class="container">
+        <div class="header">
+            <h2>宿舍管理系统 - 人员管理</h2>
+            <div>
+                <button id="importBtn" class="btn btn-warning">导入数据</button>
+                <button id="addBtn" class="btn">添加人员</button>
+            </div>
+        </div>
+
+        <div class="search-area">
+            <div style="display: flex; gap: 15px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="searchName">姓名</label>
+                    <input type="text2" id="searchName" placeholder="输入姓名">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="searchRole">角色</label>
+                    <select id="searchRole">
+                        <option value="">全部</option>
+                        <option value="辅导员">辅导员</option>
+                        <option value="宿舍管理员">宿舍管理员</option>
+                        <option value="系统管理员">系统管理员</option>
+                        <option value="学生">学生</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="searchGender">性别</label>
+                    <select id="searchGender">
+                        <option value="">全部</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+            </div>
+            <button id="searchBtn" class="btn">查询</button>
+            <button id="resetBtn" class="btn btn-info">重置</button>
+        </div>
+
+        <table id="personnelTable">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>角色</th>
+                    <th>院系</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 数据将通过JS动态生成 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 添加/编辑人员模态框 -->
+    <div id="personModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">添加人员</h3>
+            <div class="form-group">
+                <label for="personName">姓名</label>
+                <input type="text2" id="personName" placeholder="请输入姓名">
+                <div id="nameError" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="personGender">性别</label>
+                <select id="personGender">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="personRole">角色</label>
+                <select id="personRole" onchange="toggleDepartmentField()">
+                    <option value="辅导员">辅导员</option>
+                    <option value="宿舍管理员">宿舍管理员</option>
+                    <option value="系统管理员">系统管理员</option>
+                    <option value="学生">学生</option>
+                </select>
+                <div id="roleError" class="error"></div>
+            </div>
+            <div class="form-group" id="departmentGroup">
+                <label for="personDepartment">院系</label>
+                <input type="text2" id="personDepartment" placeholder="请输入院系">
+                <div id="departmentError" class="error"></div>
+            </div>
+            <button id="savePersonBtn" class="btn">保存</button>
+            <input type="hidden" id="editPersonId">
+        </div>
+    </div>
+
+    <!-- 导入数据模态框 -->
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>导入人员数据</h3>
+            <div class="form-group">
+                <label for="importFile">选择文件</label>
+                <input type="file" id="importFile" accept=".csv, .xlsx">
+            </div>
+            <button id="confirmImportBtn" class="btn">确认导入</button>
+        </div>
+    </div>
+
+    <script>
+        // 模拟数据存储
+        let personnelData = JSON.parse(localStorage.getItem('personnelData')) || [];
+        let currentEditId = null;
+
+        // 初始化测试数据
+        if (personnelData.length === 0) {
+            personnelData = [
+                { id: '1', name: '王五', gender: '男', role: '系统管理员', department: '' },
+                { id: '2', name: '张三', gender: '男', role: '辅导员', department: '计算机学院' },
+                { id: '3', name: '李四', gender: '女', role: '宿舍管理员', department: '' },
+                { id: '4', name: '赵六', gender: '女', role: '学生', department: '外国语学院' },
+                { id: '5', name: '钱七', gender: '男', role: '学生', department: '经济管理学院' }
+            ];
+            localStorage.setItem('personnelData', JSON.stringify(personnelData));
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPersonnelTable(personnelData);
+            
+            // 绑定查询按钮事件
+            document.getElementById('searchBtn').addEventListener('click', searchPersonnel);
+            
+            // 绑定重置按钮事件
+            document.getElementById('resetBtn').addEventListener('click', resetSearch);
+            
+            // 绑定添加人员按钮事件
+            document.getElementById('addBtn').addEventListener('click', function() {
+                document.getElementById('modalTitle').textContent = '添加人员';
+                document.getElementById('personName').value = '';
+                document.getElementById('personGender').value = '男';
+                document.getElementById('personRole').value = '辅导员';
+                document.getElementById('personDepartment').value = '';
+                document.getElementById('editPersonId').value = '';
+                document.getElementById('personModal').style.display = 'block';
+                toggleDepartmentField();
+                clearErrors();
+            });
+            
+            // 绑定保存人员按钮事件
+            document.getElementById('savePersonBtn').addEventListener('click', savePerson);
+            
+            // 绑定导入数据按钮事件
+            document.getElementById('importBtn').addEventListener('click', function() {
+                document.getElementById('importModal').style.display = 'block';
+            });
+            
+            // 绑定确认导入按钮事件
+            document.getElementById('confirmImportBtn').addEventListener('click', importData);
+        });
+
+        // 渲染人员表格
+        function renderPersonnelTable(data) {
+            const tableBody = document.querySelector('#personnelTable tbody');
+            tableBody.innerHTML = '';
+            
+            // 确保系统管理员排第一
+            data.sort((a, b) => {
+                if (a.role === '系统管理员') return -1;
+                if (b.role === '系统管理员') return 1;
+                return 0;
+            });
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">暂无数据</td></tr>';
+                return;
+            }
+            
+            data.forEach((person, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${person.name}</td>
+                    <td>${person.gender}</td>
+                    <td>${person.role}</td>
+                    <td>${person.department || '-'}</td>
+                    <td class="action-btns">
+                        <button class="btn" onclick="editPerson('${person.id}')">编辑</button>
+                        <button class="btn btn-warning" onclick="deletePerson('${person.id}')">删除</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // 查询人员
+        function searchPersonnel() {
+            const name = document.getElementById('searchName').value.trim().toLowerCase();
+            const role = document.getElementById('searchRole').value;
+            const gender = document.getElementById('searchGender').value;
+            
+            const filteredData = personnelData.filter(person => {
+                const nameMatch = name === '' || person.name.toLowerCase().includes(name);
+                const roleMatch = role === '' || person.role === role;
+                const genderMatch = gender === '' || person.gender === gender;
+                return nameMatch && roleMatch && genderMatch;
+            });
+            
+            renderPersonnelTable(filteredData);
+        }
+
+        // 重置查询
+        function resetSearch() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('searchRole').value = '';
+            document.getElementById('searchGender').value = '';
+            renderPersonnelTable(personnelData);
+        }
+
+        // 编辑人员
+        function editPerson(id) {
+            const person = personnelData.find(p => p.id === id);
+            if (person) {
+                document.getElementById('modalTitle').textContent = '编辑人员';
+                document.getElementById('personName').value = person.name;
+                document.getElementById('personGender').value = person.gender;
+                document.getElementById('personRole').value = person.role;
+                document.getElementById('personDepartment').value = person.department || '';
+                document.getElementById('editPersonId').value = person.id;
+                document.getElementById('personModal').style.display = 'block';
+                toggleDepartmentField();
+                clearErrors();
+            }
+        }
+
+        // 保存人员
+        function savePerson() {
+            const name = document.getElementById('personName').value.trim();
+            const gender = document.getElementById('personGender').value;
+            const role = document.getElementById('personRole').value;
+            const department = document.getElementById('personDepartment').value.trim();
+            const editId = document.getElementById('editPersonId').value;
+            
+            // 验证输入
+            let isValid = true;
+            clearErrors();
+            
+            if (!name) {
+                document.getElementById('nameError').textContent = '姓名不能为空';
+                isValid = false;
+            }
+            
+            if (role === '系统管理员') {
+                const existingAdmin = personnelData.find(p => p.role === '系统管理员' && p.id !== editId);
+                if (existingAdmin) {
+                    document.getElementById('roleError').textContent = '系统管理员只能有一个';
+                    isValid = false;
+                }
+            }
+            
+            if ((role === '辅导员' || role === '学生') && !department) {
+                document.getElementById('departmentError').textContent = '院系不能为空';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            if (editId) {
+                // 编辑现有人员
+                const personIndex = personnelData.findIndex(p => p.id === editId);
+                if (personIndex !== -1) {
+                    personnelData[personIndex] = {
+                        id: editId,
+                        name: name,
+                        gender: gender,
+                        role: role,
+                        department: (role === '辅导员' || role === '学生') ? department : ''
+                    };
+                }
+            } else {
+                // 添加新人员
+                const newPerson = {
+                    id: Date.now().toString(),
+                    name: name,
+                    gender: gender,
+                    role: role,
+                    department: (role === '辅导员' || role === '学生') ? department : ''
+                };
+                personnelData.unshift(newPerson);
+            }
+            
+            localStorage.setItem('personnelData', JSON.stringify(personnelData));
+            closeModal();
+            renderPersonnelTable(personnelData);
+        }
+
+        // 删除人员
+        function deletePerson(id) {
+            const person = personnelData.find(p => p.id === id);
+            if (person && person.role === '系统管理员') {
+                alert('系统管理员不能删除');
+                return;
+            }
+            
+            if (confirm('确定要删除这条人员信息吗？')) {
+                personnelData = personnelData.filter(p => p.id !== id);
+                localStorage.setItem('personnelData', JSON.stringify(personnelData));
+                renderPersonnelTable(personnelData);
+            }
+        }
+
+        // 导入数据
+        function importData() {
+            const fileInput = document.getElementById('importFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('请选择文件');
+                return;
+            }
+            
+            // 这里简单模拟导入功能，实际项目中需要解析文件内容
+            alert('导入功能需要后端支持，此处仅做演示');
+            closeModal();
+        }
+
+        // 根据角色显示/隐藏院系字段
+        function toggleDepartmentField() {
+            const role = document.getElementById('personRole').value;
+            const departmentGroup = document.getElementById('departmentGroup');
+            
+            if (role === '辅导员' || role === '学生') {
+                departmentGroup.style.display = 'block';
+            } else {
+                departmentGroup.style.display = 'none';
+            }
+        }
+
+        // 清除错误信息
+        function clearErrors() {
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('roleError').textContent = '';
+            document.getElementById('departmentError').textContent = '';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('personModal').style.display = 'none';
+            document.getElementById('importModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>宿舍维修管理系统</title>
+    <style>
+	/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+
+/* 头部样式 */
+.header {
+    background: #1e90ff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 200px;
+}
+
+/* 主体区域 */
+.main-content {
+    flex: 1;
+    display: flex;
+}
+
+/* 导航菜单容器 */
+.nav-container {
+    background: #99CCFF;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 导航菜单项 */
+.nav-item {
+    position: relative;
+    display: inline-block;
+    padding: 12px 30px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.nav-item:hover {
+    background: #7fb3ff;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background: #f0f8ff;
+}
+
+/* 右侧内容区 */
+ .right-content {
+        flex: 1;
+        padding: 40px;
+        background: #f5f5f5;
+    }
+    body {
+        font-family: 'Microsoft YaHei';
+        margin: 0;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .tab-container {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .tab {
+        padding: 10px 20px;
+        background: #e0e0e0;
+        cursor: pointer;
+        margin-right: 5px;
+        border-radius: 5px 5px 0 0;
+    }
+    .tab.active {
+        background: #99CCFF;
+        color: white;
+    }
+    .content {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 0 0 5px 5px;
+    }
+    .content.active {
+        display: block;
+    }
+    form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    button {
+        background: #99CCFF;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .progress-bar {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin: 30px 0;
+    }
+    .progress-step {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+    .step-number {
+        width: 30px;
+        height: 30px;
+        background: #ddd;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 10px;
+    }
+    .step-number.active {
+        background: #99CCFF;
+        color: white;
+    }
+    .progress-connector {
+        position: absolute;
+        top: 15px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #ddd;
+        z-index: 0;
+    }
+    .progress-connector.active {
+        background: #99CCFF;
+    }
+    .step-content {
+        display: none;
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .step-content.active {
+        display: block;
+    }
+    .teacher-options {
+        margin-top: 10px;
+    }
+    .repair-item {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .full-width {
+        grid-column: 1 / -1;
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .option-group {
+        margin: 15px 0;
+    }
+    .card {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    .card:hover {
+        background-color: #f0f0f0;
+    }
+    .image-preview {
+        max-width: 100%;
+        cursor: pointer;
+    }
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+    }
+    .image-modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    .image-modal-content img {
+        max-width: 100%;
+        max-height: 80vh;
+    }
+    .close-image {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+<!-- 顶部标题栏 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="44%" rowspan="3" bgcolor="#99CCFF" style="padding:20px">
+      <h1 style="margin:0;font-size:24px;color:white"><a href="1.html">高校宿舍管理系统</a></h1>
+    </td>
+    <td width="23%" bgcolor="#99CCFF">&nbsp;</td>
+    <td width="33%" bgcolor="#99CCFF" style="text-align:right;padding-right:30px">
+      <div class="search-box">
+        <input type="text" placeholder="请输入关键词">
+        <button style="
+          background: #1e90ff;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          cursor: pointer;
+          margin-left: 10px;
+        ">搜索</button>
+      </div>
+    </td>
+  </tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+  <tr><td colspan="2" bgcolor="#99CCFF">&nbsp;</td></tr>
+</table>
+
+<!-- 导航菜单 -->
+<div class="nav-container" style="text-align:center">
+  <div class="nav-item">
+    宿舍管理
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="3.html">信息填写</a></div>
+      <div class="dropdown-item"><a href="1-2.html">住宿管理</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    宿舍事务
+    <div class="dropdown">
+      <div class="dropdown-item"><a href="2-1.html">考勤记录</a></div>
+      <div class="dropdown-item"><a href="2-2.html">宿舍分配</a></div>
+      <div class="dropdown-item"><a href="2-3.html">卫生评选</a></div>
+    </div>
+  </div>
+
+  <div class="nav-item"><a href="3-3.html">维修申请</a></div>
+  <div class="nav-item"><a href="4-1.html">通知公告</a></div>
+  <div class="nav-item"> 系统管理
+  <div class="dropdown">
+    <div class="dropdown-item"><a href="5-1.html">人员管理</a></div>
+    <div class="dropdown-item"><a href="5-2.html">权限管理</a></div>
+  </div>
+</div>
+</div>
+<div class="container">
+    <h1>宿舍管理系统-维修申请</h1>
+    <div class="tab-container">
+        <div class="tab active" onclick="switchTab('new-request')">新建申请</div>
+        <div class="tab" onclick="switchTab('student-view')">学生查看</div>
+        <div class="tab" onclick="switchTab('teacher-view')">教师处理</div>
+    </div>
+
+    <!-- 新建申请 -->
+    <div id="new-request" class="content active">
+        <form id="repairForm" onsubmit="submitRepairRequest(event)">
+            <div class="form-group">
+                <label>宿舍号</label>
+                <input type="text" id="dormNumber" required>
+            </div>
+            <div class="form-group">
+                <label>申请人</label>
+                <input type="text" id="applicant" required>
+            </div>
+            <div class="form-group">
+                <label>维修设施</label>
+                <select id="facility" required>
+                    <option value="">请选择...</option>
+                    <option value="床铺">床铺</option>
+                    <option value="桌椅">桌椅</option>
+                    <option value="门窗">门窗</option>
+                    <option value="水电">水电</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label>问题描述</label>
+                <textarea id="description" rows="4" required></textarea>
+            </div>
+            <div class="form-group full-width">
+                <label>上传截图</label>
+                <input type="file" id="attachment" accept="image/*">
+            </div>
+            <div class="form-group full-width">
+                <button type="submit">提交申请</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 学生查看 -->
+    <div id="student-view" class="content">
+        <div class="card" onclick="showStudentCard()">查看申请进度</div>
+        <div id="student-card-content" class="step-content" style="display:none;">
+            <div class="progress-bar">
+                <div class="progress-connector" id="student-connector-1"></div>
+                <div class="progress-connector" id="student-connector-2"></div>
+                <div class="progress-connector" id="student-connector-3"></div>
+                <div class="progress-step" onclick="showStep('student',1)">
+                    <div class="step-number" id="student-step1">1</div>
+                    <div>提交申请</div>
+                </div>
+                <div class="progress-step" onclick="showStep('student',2)">
+                    <div class="step-number" id="student-step2">2</div>
+                    <div>排查</div>
+                </div>
+                <div class="progress-step" onclick="showStep('student',3)">
+                    <div class="step-number" id="student-step3">3</div>
+                    <div>联系维修</div>
+                </div>
+                <div class="progress-step" onclick="showStep('student',4)">
+                    <div class="step-number" id="student-step4">4</div>
+                    <div>维修结束</div>
+                </div>
+            </div>
+            <div id="student-repair-details"></div>
+        </div>
+    </div>
+
+    <!-- 教师处理 -->
+    <div id="teacher-view" class="content">
+        <div class="card" onclick="showTeacherCard()">处理维修申请</div>
+        <div id="teacher-card-content" class="step-content" style="display:none;">
+            <div class="progress-bar">
+                <div class="progress-connector" id="teacher-connector-1"></div>
+                <div class="progress-connector" id="teacher-connector-2"></div>
+                <div class="progress-connector" id="teacher-connector-3"></div>
+                <div class="progress-step" onclick="showStep('teacher',1)">
+                    <div class="step-number" id="teacher-step1">1</div>
+                    <div>提交申请</div>
+                </div>
+                <div class="progress-step" onclick="showStep('teacher',2)">
+                    <div class="step-number" id="teacher-step2">2</div>
+                    <div>排查</div>
+                </div>
+                <div class="progress-step" onclick="showStep('teacher',3)">
+                    <div class="step-number" id="teacher-step3">3</div>
+                    <div>联系维修</div>
+                </div>
+                <div class="progress-step" onclick="showStep('teacher',4)">
+                    <div class="step-number" id="teacher-step4">4</div>
+                    <div>维修结束</div>
+                </div>
+            </div>
+            <div>请点击进度条处理申请</div>
+            <div id="teacher-repair-details"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 教师处理弹窗 -->
+<div id="checkModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('checkModal')">&times;</span>
+        <h3>排查结果</h3>
+        <div class="option-group">
+            <button onclick="setCheckResult(true)">经排查，需要维修</button>
+            <button onclick="setCheckResult(false)">经排查，不需要维修</button>
+        </div>
+    </div>
+</div>
+
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('contactModal')">&times;</span>
+        <h3>联系维修人员</h3>
+        <div class="option-group">
+            <button onclick="setContacted(true)">已联系维修人员</button>
+        </div>
+    </div>
+</div>
+
+<div id="repairModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('repairModal')">&times;</span>
+        <h3>维修结果</h3>
+        <div class="option-group">
+            <button onclick="setRepairResult(true)">维修完成</button>
+            <button onclick="setRepairResult(false)">维修失败</button>
+        </div>
+    </div>
+</div>
+
+<div id="imageModal" class="image-modal">
+    <div class="image-modal-content">
+        <span class="close-image" onclick="closeImageModal()">&times;</span>
+        <img id="imageModalImg" src="" alt="维修图片">
+    </div>
+</div>
+
+<script>
+    let repairs = [];
+    let currentRepairId = null;
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+        document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+        if (tabId === 'student-view') refreshStudentView();
+        if (tabId === 'teacher-view') refreshTeacherView();
+    }
+
+    function submitRepairRequest(e) {
+        e.preventDefault();
+        const newRepair = {
+            id: Date.now(),
+            dormNumber: document.getElementById('dormNumber').value,
+            applicant: document.getElementById('applicant').value,
+            facility: document.getElementById('facility').value,
+            description: document.getElementById('description').value,
+            status: 'submitted',
+            checkResult: null,
+            contacted: false,
+            repairResult: null,
+            createdAt: new Date().toLocaleString(),
+            attachment: document.getElementById('attachment').files[0]
+        };
+        repairs.push(newRepair);
+        currentRepairId = newRepair.id;
+        alert('申请已提交！');
+        document.getElementById('repairForm').reset();
+        switchTab('student-view');
+        document.querySelector('.tab[onclick="switchTab(\'new-request\')"]').classList.add('active');
+    }
+
+    function refreshStudentView() {
+        const container = document.getElementById('student-repair-details');
+        container.innerHTML = repairs.map(repair => `
+            <h3>${repair.dormNumber} - ${repair.facility}</h3>
+            <p>申请人: ${repair.applicant}</p>
+            <p>问题: ${repair.description}</p>
+            ${repair.attachment ? `<img class="image-preview" src="${URL.createObjectURL(repair.attachment)}" alt="维修图片">` : ''}
+            <button onclick="viewRepair(${repair.id})">查看进度</button>
+        `).join('');
+        if (repairs.length > 0) viewRepair(currentRepairId || repairs[0].id);
+    }
+
+    function refreshTeacherView() {
+        const container = document.getElementById('teacher-repair-details');
+        container.innerHTML = repairs.filter(r => r.status !== 'completed' || r.repairResult === null).map(repair => `
+            <h3>${repair.dormNumber} - ${repair.facility}</h3>
+            <p>申请人: ${repair.applicant}</p>
+            <p>问题: ${repair.description}</p>
+            ${repair.attachment ? `<img class="image-preview" src="${URL.createObjectURL(repair.attachment)}" alt="维修图片">` : ''}
+            <button onclick="handleRepair(${repair.id})">处理</button>
+        `).join('');
+        if (repairs.length > 0) handleRepair(currentRepairId || repairs[0].id);
+    }
+
+    function viewRepair(id) {
+        currentRepairId = id;
+        const repair = repairs.find(r => r.id === id);
+        updateProgress('student', repair);
+        document.getElementById('student-card-content').style.display = 'block';
+    }
+
+    function handleRepair(id) {
+        currentRepairId = id;
+        const repair = repairs.find(r => r.id === id);
+        updateProgress('teacher', repair);
+        document.getElementById('teacher-card-content').style.display = 'block';
+    }
+
+    function updateProgress(type, repair) {
+        // 更新进度条状态
+        const steps = [1, 2, 3, 4];
+        steps.forEach(step => {
+            const el = document.getElementById(`${type}-step${step}`);
+            el.classList.remove('active');
+            if (step > 1) document.getElementById(`${type}-connector-${step-1}`).classList.remove('active');
+        });
+
+        document.getElementById(`${type}-step1`).classList.add('active');
+
+        if (repair.status === 'checked' || repair.repairResult !== null) {
+            document.getElementById(`${type}-step2`).classList.add('active');
+            document.getElementById(`${type}-connector-1`).classList.add('active');
+        }
+
+        if (repair.contacted) {
+            document.getElementById(`${type}-step3`).classList.add('active');
+            document.getElementById(`${type}-connector-2`).classList.add('active');
+        }
+
+        if (repair.repairResult !== null) {
+            document.getElementById(`${type}-step4`).classList.add('active');
+            document.getElementById(`${type}-connector-3`).classList.add('active');
+        }
+    }
+
+    function showStep(type, step) {
+        const repair = repairs.find(r => r.id === currentRepairId);
+        if (!repair) return;
+
+        // 教师处理逻辑
+        if (type === 'teacher') {
+            if (step === 2 && repair.status === 'submitted') {
+                document.getElementById('checkModal').style.display = 'block';
+            }
+            if (step === 3 && repair.checkResult && !repair.contacted) {
+                document.getElementById('contactModal').style.display = 'block';
+            }
+            if (step === 4 && repair.contacted && repair.repairResult === null) {
+                document.getElementById('repairModal').style.display = 'block';
+            }
+        }
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function setCheckResult(needRepair) {
+        const repair = repairs.find(r => r.id === currentRepairId);
+        if (repair) {
+            repair.checkResult = needRepair;
+            repair.status = 'checked';
+            if (!needRepair) {
+                repair.repairResult = false;
+                alert('已标记为不需要维修');
+            }
+            updateProgress('teacher', repair);
+            updateProgress('student', repair);
+            refreshTeacherView();
+            refreshStudentView();
+        }
+        closeModal('checkModal');
+    }
+
+    function setContacted(contacted) {
+        const repair = repairs.find(r => r.id === currentRepairId);
+        if (repair) {
+            repair.contacted = contacted;
+            updateProgress('teacher', repair);
+            updateProgress('student', repair);
+            refreshTeacherView();
+            refreshStudentView();
+        }
+        closeModal('contactModal');
+    }
+
+    function setRepairResult(success) {
+        const repair = repairs.find(r => r.id === currentRepairId);
+        if (repair) {
+            repair.repairResult = success;
+            updateProgress('teacher', repair);
+            updateProgress('student', repair);
+            refreshTeacherView();
+            refreshStudentView();
+        }
+        closeModal('repairModal');
+    }
+
+    function showStudentCard() {
+        document.getElementById('student-card-content').style.display = 'block';
+    }
+
+    function showTeacherCard() {
+        document.getElementById('teacher-card-content').style.display = 'block';
+    }
+
+    document.querySelectorAll('.image-preview').forEach(img => {
+        img.addEventListener('click', function() {
+            const modalImg = document.getElementById('imageModalImg');
+            modalImg.src = this.src;
+            document.getElementById('imageModal').style.display = 'block';
+        });
+    });
+
+    function closeImageModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>
